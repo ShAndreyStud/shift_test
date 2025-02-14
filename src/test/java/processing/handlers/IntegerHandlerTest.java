@@ -1,4 +1,4 @@
-package processing;
+package processing.handlers;
 
 import com.sheandstud.processing.handlers.IntegerHandler;
 import org.junit.jupiter.api.*;
@@ -22,16 +22,21 @@ public class IntegerHandlerTest {
     @Test
     void testValidInteger() throws IOException {
         assertTrue(handler.handle("123456789"));
+        assertTrue(handler.handle("+123456789"));
+        assertTrue(handler.handle("-123456789"));
         handler.close();
 
         String content = Files.readString(testFile);
         assertTrue(content.contains("123456789"));
+        assertTrue(content.contains("+123456789"));
+        assertTrue(content.contains("-123456789"));
     }
 
     @Test
     void testInvalidInteger() throws IOException {
         assertFalse(handler.handle("12.34"));
         assertFalse(handler.handle("abc"));
+        assertFalse(handler.handle("1 2 3"));
     }
 
     @AfterEach

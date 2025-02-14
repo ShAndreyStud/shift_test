@@ -1,4 +1,4 @@
-package processing;
+package processing.handlers;
 
 import com.sheandstud.processing.handlers.StringHandler;
 import org.junit.jupiter.api.*;

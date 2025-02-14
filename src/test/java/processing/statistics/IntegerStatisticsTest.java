@@ -1,4 +1,4 @@
-package statistics;
+package processing.statistics;
 
 import com.sheandstud.processing.statistics.IntegerStatistics;
 import org.junit.jupiter.api.*;
@@ -9,19 +9,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class IntegerStatisticsTest {
     @Test
-    void testEmptyStatistics() {
+    void integerStats_LargeNumbers() {
         IntegerStatistics stats = new IntegerStatistics();
+        stats.update(new BigInteger("12345678901234567890"));
+        stats.update(new BigInteger("-987654321"));
+
         String result = stats.format(true);
-        assertTrue(result.contains("Count: 0"));
+        assertTrue(result.contains("Min: -987654321"));
+        assertTrue(result.contains("Max: 12345678901234567890"));
+        assertTrue(result.contains("Sum: 12345678900246913569"));
     }
 
     @Test
-    void testLargeNumbers() {
+    void integerStats_NoData() {
         IntegerStatistics stats = new IntegerStatistics();
-        stats.update(new BigInteger("123456789012345678901234567890"));
-        stats.update(new BigInteger("-9999999999999999999"));
-
-        String result = stats.format(true);
-        assertTrue(result.contains("Sum: 123456789002345678901234567891"));
+        assertTrue(stats.format(true).contains("N/A"));
     }
 }
